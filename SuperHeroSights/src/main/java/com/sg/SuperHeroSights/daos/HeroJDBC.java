@@ -39,7 +39,7 @@ public class HeroJDBC implements HeroDao {
         int rowsAffected = template.update(
                 connection -> {
                     PreparedStatement ps = connection.prepareStatement(
-                            "INSERT INTO heroes (name, description, superpowerId) VALUES (?,?,?)",
+                            "INSERT INTO Heroes (name, description, superpowerId) VALUES (?,?,?)",
                             Statement.RETURN_GENERATED_KEYS
                     );
                     ps.setString(1, toAdd.getName());
@@ -94,7 +94,7 @@ public class HeroJDBC implements HeroDao {
     }
 
     private Superpower getSuperPowerForHero(int heroId) {
-        return template.queryForObject("SELECT sp.* FROM superpowers sp JOIN heroes h ON h.superpowerId = sp.SuperPowerId WHERE h.heroId = ?", new SuperPowerMapper(), heroId);
+        return template.queryForObject("SELECT sp.* FROM Superpowers sp JOIN Heroes h ON h.superpowerId = sp.SuperPowerId WHERE h.heroId = ?", new SuperPowerMapper(), heroId);
     }
 
     public static class HeroMapper implements RowMapper<Hero> {

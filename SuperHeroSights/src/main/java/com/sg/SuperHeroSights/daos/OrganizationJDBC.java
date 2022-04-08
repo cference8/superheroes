@@ -63,17 +63,17 @@ public class OrganizationJDBC implements OranizationDao {
 
     private void insertOrgHero(Organization toAdd) {
         for (Hero hero : toAdd.getHeroes()) {
-            template.update("INSERT INTO organization_hero(OrganizationId, HeroId) VALUES (?,?)", toAdd.getId(), hero.getHeroId());
+            template.update("INSERT INTO Organization_Hero(OrganizationId, HeroId) VALUES (?,?)", toAdd.getId(), hero.getHeroId());
         }
     }
 
     @Override
     @Transactional
     public void editOrganization(Organization toEdit) {
-        template.update("UPDATE organizations SET name = ?, description = ?, address = ?, phone = ? WHERE organizationId = ?", 
+        template.update("UPDATE Organizations SET name = ?, description = ?, address = ?, phone = ? WHERE organizationId = ?",
                 toEdit.getName(), toEdit.getDescription(), toEdit.getAddress(), toEdit.getPhone(), toEdit.getId());
         
-        template.update("DELETE FROM Organization_hero WHERE organizationId = ?", toEdit.getId());
+        template.update("DELETE FROM Organization_Hero WHERE organizationId = ?", toEdit.getId());
         insertOrgHero(toEdit);
     }
 
@@ -81,7 +81,7 @@ public class OrganizationJDBC implements OranizationDao {
     @Transactional
     public void deleteOrganizationById(int id) {
         //delete from bridge table
-        template.update("DELETE FROM organization_hero WHERE organizationId = ?", id);
+        template.update("DELETE FROM Organization_Hero WHERE organizationId = ?", id);
         //delete from org table
         template.update("DELETE FROM Organizations WHERE OrganizationId = ?", id);
         
@@ -103,7 +103,7 @@ public class OrganizationJDBC implements OranizationDao {
     }
 
     private List<Hero> getHeroByOrganizationId(int id) {
-        List<Hero> toReturn = template.query("SELECT * FROM heroes h JOIN superpowers sp ON sp.superpowerId = h.superpowerId \n" +
+        List<Hero> toReturn = template.query("SELECT * FROM Heroes h JOIN Superpowers sp ON sp.superpowerId = h.superpowerId \n" +
 "WHERE h.heroId IN (SELECT oh.heroId FROM organization_hero oh WHERE oh.organizationId = ?) ",
                 new HeroMapper(), id);
 

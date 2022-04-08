@@ -102,7 +102,7 @@ public class SightingJDBC implements SightingDao {
     }
 
     private List<Location> getLocationsForSighting(int id) {
-        return template.query("SELECT l.* FROM Locations l JOIN sightings s ON s.locationId = l.locationId WHERE s.SightingId = ?", new LocationMapper(), id);
+        return template.query("SELECT l.* FROM Locations l JOIN Sightings s ON s.locationId = l.locationId WHERE s.SightingId = ?", new LocationMapper(), id);
     }
 
     @Override
