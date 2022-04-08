@@ -103,7 +103,7 @@ public class OrganizationJDBC implements OranizationDao {
     }
 
     private List<Hero> getHeroByOrganizationId(int id) {
-        List<Hero> toReturn = template.query("SELECT * FROM Heroes h JOIN Superpowers sp ON sp.superpowerId = h.superpowerId \n" +
+        List<Hero> toReturn = template.query("SELECT * FROM Heroes h JOIN SuperPowers sp ON sp.superpowerId = h.superpowerId \n" +
 "WHERE h.heroId IN (SELECT oh.heroId FROM organization_hero oh WHERE oh.organizationId = ?) ",
                 new HeroMapper(), id);
 

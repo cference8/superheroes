@@ -36,7 +36,7 @@ public class SuperPowerJDBC implements SuperPowerDao {
         int rowsAffected = template.update(
                 connection -> {
                     PreparedStatement ps = connection.prepareStatement(
-                            "INSERT INTO Superpowers (name) VALUES (?)",
+                            "INSERT INTO SuperPowers (name) VALUES (?)",
                             Statement.RETURN_GENERATED_KEYS
                     );
                     ps.setString(1, toAdd.getName());
@@ -54,7 +54,7 @@ public class SuperPowerJDBC implements SuperPowerDao {
 
     @Override
     public void editSuperPower(Superpower toEdit) {
-        template.update("UPDATE Superpowers SET name = ? WHERE superpowerId = ?"
+        template.update("UPDATE SuperPowers SET name = ? WHERE superpowerId = ?"
                 , toEdit.getName(), toEdit.getSuperpowerId());
     }
 
@@ -63,7 +63,7 @@ public class SuperPowerJDBC implements SuperPowerDao {
         
         template.update("DELETE FROM Heroes WHERE superpowerId = ?", id);
         
-        template.update("DELETE FROM Superpowers WHERE superpowerId = ?", id);
+        template.update("DELETE FROM SuperPowers WHERE superpowerId = ?", id);
     }
 
     @Override

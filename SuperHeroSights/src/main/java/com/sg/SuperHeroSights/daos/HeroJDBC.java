@@ -94,7 +94,7 @@ public class HeroJDBC implements HeroDao {
     }
 
     private Superpower getSuperPowerForHero(int heroId) {
-        return template.queryForObject("SELECT sp.* FROM Superpowers sp JOIN Heroes h ON h.superpowerId = sp.SuperPowerId WHERE h.heroId = ?", new SuperPowerMapper(), heroId);
+        return template.queryForObject("SELECT sp.* FROM SuperPowers sp JOIN Heroes h ON h.superpowerId = sp.SuperPowerId WHERE h.heroId = ?", new SuperPowerMapper(), heroId);
     }
 
     public static class HeroMapper implements RowMapper<Hero> {
