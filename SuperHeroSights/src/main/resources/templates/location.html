@@ -6,12 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">        <link rel="stylesheet" href="style.css" />
         <title>Location Page</title>
     </head>
     <body>
         <!-- Main Body of Page -->
+        <div id='stars'></div>
+        <div id='stars2'></div>
+        <div id='stars3'></div>
+
         <div class="container">
             <div class="row m-4">
                 <div class="col text-center border border-dark">
@@ -42,35 +45,27 @@
                 <div class="col-7 text-center m-3">
                     <form action="addLocation" method="POST">
                         <div class="form-group row">
-                            <label for="name" class="col-3 col-form-label">
-                                City</label>
+                            <label for="address" class="col-3 col-form-label">
+                                Address</label>
                             <div class="col-9">
-                                <input type="text" name="name" 
-                                       id="name" class="form-control"/>
+                                <input type="text" name="address"
+                                       id="address" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="description" class="col-3 col-form-label">
                                 Description</label>
                             <div class="col-9">
-                                <input type="text" name="description" 
+                                <input type="text" name="description"
                                        id="description" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="address" class="col-3 col-form-label">
-                                Address</label>
+                            <label for="name" class="col-3 col-form-label">
+                                City</label>
                             <div class="col-9">
-                                <input type="text" name="address" 
-                                       id="address" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="longitude" class="col-3 col-form-label">
-                                Longitude</label>
-                            <div class="col-9">
-                                <input type="text" name="longitude" 
-                                       id="longitude" class="form-control"/>
+                                <input type="text" name="name"
+                                       id="name" class="form-control"/>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -79,6 +74,14 @@
                             <div class="col-9">
                                 <input type="text" name="latitude" 
                                        id="latitude" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="longitude" class="col-3 col-form-label">
+                                Longitude</label>
+                            <div class="col-9">
+                                <input type="text" name="longitude" 
+                                       id="longitude" class="form-control"/>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Add Location</button>
@@ -90,24 +93,24 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>City</th>
-                                <th>Description</th>
-                                <th>Address</th>
-                                <th>Longitude</th>
-                                <th>Latitude</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">City</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Longitude</th>
+                                <th scope="col">Latitude</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="location : ${locations}">
-                                <td th:text="${location.id}">Location ID</td>
+                                <th scope="row" th:text="${location.id}">Location ID</th>
                                 <td th:text="${location.name}">Location Name</td>
                                 <td th:text="${location.description}">Location Description</td>
                                 <td th:text="${location.address}">Location Address</td>
-                                <td th:text="${location.longitude}">Location Longitude</td>
                                 <td th:text="${location.latitude}">Location Latitude</td>
+                                <td th:text="${location.longitude}">Location Longitude</td>
                                 <td><a href="#" th:href="@{/editLocation(id=${location.id})}">Edit</a></td>
                                 <td><a href="#" th:href="@{/deleteLocation(id=${location.id})}">Delete</a></td>
                             </tr>
@@ -120,6 +123,27 @@
         <!-- End main body -->
 
         <!-- Optional JavaScript -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIoUt1VIPpXq7njD4WxY50CpxcZzOjTzI&libraries=places"></script>
+        <script type="text/javascript">
+                    google.maps.event.addDomListener(window, 'load', intilize);
+                    function intilize(){
+                        var autocomplete = new google.maps.places.Autocomplete(document.getElementById('address'));
+
+                        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+
+                            var places = autocomplete.getPlace();
+                            var address = places.formatted_address;
+                            var latitude = places.geometry.location.lat();
+                            var longitude = places.geometry.location.lng();
+                            var city = places.vicinity;
+
+                            document.getElementById('address').innerHTML = address;
+                            document.getElementById('latitude').value = latitude;
+                            document.getElementById('longitude').value = longitude;
+                            document.getElementById('name').value = city;
+                        });
+                    };
+                </script>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

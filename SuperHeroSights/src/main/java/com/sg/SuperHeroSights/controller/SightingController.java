@@ -63,7 +63,17 @@ public class SightingController {
     @GetMapping("editSighting")
     public String displayEditSightingPage(Model m, Integer id){
         Sighting toEdit = service.getSightingById(id);
+        List<Hero> heroes = service.getAllHeroes();
+        List<Location> locations = service.getAllLocations();
         m.addAttribute("sighting", toEdit);
-        return "sighting";
+        m.addAttribute("heroes", heroes);
+        m.addAttribute("locations", locations);
+        return "editSighting";
+    }
+
+    @GetMapping("deleteSighting")
+    public String deleteLocation(Integer id){
+        service.deleteSightingById(id);
+        return "redirect:/sighting";
     }
 }

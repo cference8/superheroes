@@ -67,7 +67,8 @@ public class HeroJDBC implements HeroDao {
 
     @Override
     public void deleteHeroById(int heroId) {
-        template.update("DELETE FROM heroes WHERE heroId = ?", heroId);
+        template.update("DELETE FROM Organization_Hero Where heroId = ?", heroId);
+        template.update("DELETE FROM Heroes WHERE heroId = ?", heroId);
     }
 
     @Override

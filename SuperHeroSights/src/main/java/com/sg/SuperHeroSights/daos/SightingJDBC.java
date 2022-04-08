@@ -71,13 +71,15 @@ public class SightingJDBC implements SightingDao {
 
     @Override
     public void deleteSightingById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        template.update("DELETE FROM Sightings WHERE sightingId = ?", id);
     }
 
     @Override
     public Sighting getSightingById(int id) {
         try {
-            Sighting toReturn = template.queryForObject("SELECT * FROM Sightings WHERE sightingId = ?", new SightingMapper());
+            Sighting toReturn = template.queryForObject("SELECT * FROM Sightings WHERE sightingId = ?", new SightingMapper(),id);
+            toReturn.setHero(getHeroForSightings(toReturn.getId()));
+            toReturn.setLocation(getLocationForSightings(toReturn.getId()));
             toReturn.setHeroSighted(getHeroesForSighting(id));
             return toReturn;
         } catch (DataAccessException ex) {
@@ -96,12 +98,11 @@ public class SightingJDBC implements SightingDao {
     }
 
     private List<Hero> getHeroesForSighting(int id) {
-        return template.query("SELECT h.* FROM heroes h"
-                + "JOIN Sightings s ON s.heroId = h.heroId WHERE s.SightingId = ?", new HeroMapper(), id);
+        return template.query("SELECT h.* FROM Heroes h JOIN Sightings s ON s.heroId = h.heroId WHERE s.SightingId = ?", new HeroMapper(), id);
     }
 
     private List<Location> getLocationsForSighting(int id) {
-        return template.query("SELECT l.* FROM locations l JOIN sightings s ON s.locationId = l.locationId WHERE s.SightingId = ?", new LocationMapper(), id);
+        return template.query("SELECT l.* FROM Locations l JOIN sightings s ON s.locationId = l.locationId WHERE s.SightingId = ?", new LocationMapper(), id);
     }
 
     @Override
@@ -117,12 +118,12 @@ public class SightingJDBC implements SightingDao {
     }
 
     private Location getLocationForSightings(int id) {
-        return template.queryForObject("SELECT l.* FROM Locations l JOIN sightings s ON s.LocationId = l.LocationId WHERE s.sightingId = ?", new LocationMapper(), id);
+        return template.queryForObject("SELECT l.* FROM Locations l JOIN Sightings s ON s.LocationId = l.LocationId WHERE s.sightingId = ?", new LocationMapper(), id);
     }
 
     private Hero getHeroForSightings(int id) {
         try {
-            Hero toReturn = template.queryForObject("SELECT h.* FROM heroes h JOIN sightings s ON s.heroId = h.heroId WHERE s.sightingId = ?", new HeroMapper(), id);
+            Hero toReturn = template.queryForObject("SELECT h.* FROM Heroes h JOIN Sightings s ON s.heroId = h.heroId WHERE s.sightingId = ?", new HeroMapper(), id);
 
             return toReturn;
 
