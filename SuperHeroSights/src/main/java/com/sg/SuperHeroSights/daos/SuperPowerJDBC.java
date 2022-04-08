@@ -61,7 +61,7 @@ public class SuperPowerJDBC implements SuperPowerDao {
     @Override
     public void deleteSuperPowerById(int id) {
         
-        template.update("DELETE FROM Heroes WHERE superpowerId = ?", id);
+        template.update("UPDATE Heroes SET superpowerId = ? WHERE superpowerId = ?",null, id);
         
         template.update("DELETE FROM SuperPowers WHERE superpowerId = ?", id);
     }
@@ -83,12 +83,12 @@ public class SuperPowerJDBC implements SuperPowerDao {
     public static class SuperPowerMapper implements RowMapper<Superpower> {
 
         @Override
-        public Superpower mapRow(ResultSet row, int i) throws SQLException {
-            Superpower toReturn = new Superpower();
-            toReturn.setSuperpowerId(row.getInt("superpowerId"));
-            toReturn.setName(row.getString("name"));
+        public Superpower mapRow(ResultSet rs, int i) throws SQLException {
+            Superpower superPower = new Superpower();
+            superPower.setSuperpowerId(rs.getInt("superpowerId"));
+            superPower.setName(rs.getString("name"));
 
-            return toReturn;
+            return superPower;
         }
 
     }

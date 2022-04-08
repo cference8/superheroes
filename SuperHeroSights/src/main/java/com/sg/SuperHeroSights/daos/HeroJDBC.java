@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -73,13 +74,15 @@ public class HeroJDBC implements HeroDao {
 
     @Override
     public Hero getHeroById(int heroId) {
-        try {
-            Hero retrieved = template.queryForObject("SELECT * FROM Heroes WHERE heroId = ?", new HeroMapper(), heroId);
-            retrieved.setPower(getSuperPowerForHero(heroId));
-            return retrieved;
-        } catch (DataAccessException ex) {
-            return null;
+
+        Hero hero = template.queryForObject("SELECT * FROM Heroes WHERE heroId = ?", new HeroMapper(), heroId);
+        Superpower superpower = getSuperPowerForHero(hero.getHeroId());
+        if (superpower != null) {
+            hero.setPower(superpower);
+        } else {
+            hero.setPower(new Superpower());
         }
+        return hero;
     }
 
     @Override
@@ -87,27 +90,36 @@ public class HeroJDBC implements HeroDao {
         List<Hero> toReturn = template.query("SELECT * FROM Heroes", new HeroMapper());
 
         for (Hero hero : toReturn) {
-            hero.setPower(getSuperPowerForHero(hero.getHeroId()));
+            Superpower toSet = getSuperPowerForHero(hero.getHeroId());
+            if (toSet != null){
+                hero.setPower(toSet);
+            } else {
+                hero.setPower(new Superpower());
+            }
         }
 
         return toReturn;
     }
 
     private Superpower getSuperPowerForHero(int heroId) {
-        return template.queryForObject("SELECT sp.* FROM SuperPowers sp JOIN Heroes h ON h.superpowerId = sp.SuperPowerId WHERE h.heroId = ?", new SuperPowerMapper(), heroId);
+        try {
+            return template.queryForObject("SELECT sp.* FROM SuperPowers sp JOIN Heroes h ON h.superpowerId = sp.SuperPowerId WHERE h.heroId = ?", new SuperPowerMapper(), heroId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public static class HeroMapper implements RowMapper<Hero> {
 
         @Override
-        public Hero mapRow(ResultSet row, int i) throws SQLException {
-            Hero toReturn = new Hero();
+        public Hero mapRow(ResultSet rs, int i) throws SQLException {
+            Hero hero = new Hero();
 
-            toReturn.setHeroId(row.getInt("heroId"));
-            toReturn.setName(row.getString("name"));
-            toReturn.setDescription(row.getString("description"));
+            hero.setHeroId(rs.getInt("heroId"));
+            hero.setName(rs.getString("name"));
+            hero.setDescription(rs.getString("description"));
 
-            return toReturn;
+            return hero;
         }
 
     }
