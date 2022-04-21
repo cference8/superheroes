@@ -27,6 +27,10 @@ body {
     color: #f8f8ff;
 }
 
+@media only screen and (max-width: 768px) {
+
+}
+
 #stars {
   width: 1px;
   height: 1px;
@@ -111,33 +115,3 @@ body {
     transform: translateY(-2000px);
   }
 }
-
-@media only screen and (max-width: 768px) {
-   .m-4 {
- margin: 0rem!important;
- }
-
- .m-3 {
- margin: 1rem!important;
- }
-
-  .border {
-   border: none!important;
-  }
-
-  .row {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .form-control {
-   width: auto;
-  }
-
-  .h3 {
-  font
-  }
-}
-
-

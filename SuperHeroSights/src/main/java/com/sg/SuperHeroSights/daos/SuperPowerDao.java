@@ -16,14 +16,14 @@ import java.util.List;
 
 public interface SuperPowerDao {
     
-    public Superpower addSuperPower(Superpower toAdd);
+    Superpower addSuperPower(Superpower toAdd);
     
-    public void editSuperPower(Superpower toEdit);
+    void editSuperPower(Superpower toEdit);
     
-    public void deleteSuperPowerById(int id);
+    void deleteSuperPowerById(int id);
     
-    public Superpower getSuperPowerById(int id);
+    Superpower getSuperPowerById(int id);
     
-    public List<Superpower> getAllSuperPowers();
+    List<Superpower> getAllSuperPowers();
     
 }

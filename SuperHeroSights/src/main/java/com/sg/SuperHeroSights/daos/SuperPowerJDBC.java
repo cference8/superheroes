@@ -33,7 +33,7 @@ public class SuperPowerJDBC implements SuperPowerDao {
 
         KeyHolder kh = new GeneratedKeyHolder();
 
-        int rowsAffected = template.update(
+        template.update(
                 connection -> {
                     PreparedStatement ps = connection.prepareStatement(
                             "INSERT INTO SuperPowers (name) VALUES (?)",

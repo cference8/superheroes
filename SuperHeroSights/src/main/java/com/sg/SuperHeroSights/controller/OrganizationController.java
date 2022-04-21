@@ -29,24 +29,20 @@ public class OrganizationController {
 
     @GetMapping("organization")
     public String displayOrganizationPage(Model m) {
-
         m.addAttribute("organizations", service.getAllOrganizations());
         m.addAttribute("heroes", service.getAllHeroes());
-
         return "organization";
     }
 
     @PostMapping("addOrganization")
     public String addOrganization(Organization toAdd, HttpServletRequest request) {
         String[] heroIds = request.getParameterValues("heroId");
-
         List<Hero> heroes = new ArrayList<>();
         for (String heroId : heroIds) {
             heroes.add(service.getHeroById(Integer.parseInt(heroId)));
         }
         toAdd.setHeroes(heroes);
         service.addOrganization(toAdd);
-
         return "redirect:/organization";
     }
 
@@ -74,10 +70,8 @@ public class OrganizationController {
         for (String id : heroIds) {
             heroes.add(service.getHeroById(Integer.parseInt(id)));
         }
-
         toEdit.setHeroes(heroes);
         service.editOrganization(toEdit);
-
         return "redirect:/organization";
     }
 

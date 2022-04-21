@@ -5,7 +5,6 @@
  */
 package com.sg.SuperHeroSights.daos;
 
-import com.sg.SuperHeroSights.models.Hero;
 import com.sg.SuperHeroSights.models.Organization;
 import java.util.List;
 
@@ -15,14 +14,14 @@ import java.util.List;
  */
 public interface OranizationDao {
 
-    public Organization addOrganization(Organization toAdd);
+    Organization addOrganization(Organization toAdd);
 
-    public void editOrganization(Organization toEdit);
+    void editOrganization(Organization toEdit);
     
-    public void deleteOrganizationById(int id);
+    void deleteOrganizationById(int id);
     
-    public Organization getOrganizationById(int id);
+    Organization getOrganizationById(int id);
     
-    public List<Organization> getAllOrganizations();
+    List<Organization> getAllOrganizations();
     
 }

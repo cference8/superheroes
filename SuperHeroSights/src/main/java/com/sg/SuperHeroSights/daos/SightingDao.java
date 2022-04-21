@@ -5,11 +5,8 @@
  */
 package com.sg.SuperHeroSights.daos;
 
-import com.sg.SuperHeroSights.models.Hero;
 import com.sg.SuperHeroSights.models.Sighting;
 import java.util.List;
-
-
 
 /**
  *
@@ -17,15 +14,15 @@ import java.util.List;
  */
 public interface SightingDao {
     
-    public Sighting addSighting(Sighting toAdd);
+    Sighting addSighting(Sighting toAdd);
     
-    public void editSighting(Sighting toEdit);
+    void editSighting(Sighting toEdit);
     
-    public void deleteSightingById(int id);
+    void deleteSightingById(int id);
     
-    public Sighting getSightingById(int id);
+    Sighting getSightingById(int id);
     
-    public List<Sighting> getAllSightings();
+    List<Sighting> getAllSightings();
     
-    public List<Sighting> getAllSightingsToDisplay();
+    List<Sighting> getAllSightingsToDisplay();
 }

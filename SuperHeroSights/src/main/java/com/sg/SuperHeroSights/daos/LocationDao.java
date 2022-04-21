@@ -5,7 +5,6 @@
  */
 package com.sg.SuperHeroSights.daos;
 
-import com.sg.SuperHeroSights.models.Hero;
 import com.sg.SuperHeroSights.models.Location;
 import java.util.List;
 
@@ -16,14 +15,14 @@ import java.util.List;
  */
 public interface LocationDao {
     
-    public Location addLocation(Location toAdd);
+    Location addLocation(Location toAdd);
     
-    public void editLocation(Location toEdit);
+    void editLocation(Location toEdit);
     
-    public void deleteLocationById(int id);
+    void deleteLocationById(int id);
     
-    public Location getLocationById(int id);
+    Location getLocationById(int id);
     
-    public List<Location> getAllLocations();
+    List<Location> getAllLocations();
     
 }

@@ -9,7 +9,7 @@ import com.sg.SuperHeroSights.models.Hero;
 import com.sg.SuperHeroSights.models.Location;
 import com.sg.SuperHeroSights.models.Sighting;
 import com.sg.SuperHeroSights.service.ServiceLayer;
-import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +43,6 @@ public class SightingController {
     
     @PostMapping("addSighting")
     public String addSighting(Sighting toAdd, HttpServletRequest request) {
-        
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         
         String heroId = request.getParameter("heroId");
         String locationId = request.getParameter("locationId");

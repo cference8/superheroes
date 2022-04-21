@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -37,7 +36,7 @@ public class HeroJDBC implements HeroDao {
 
         KeyHolder kh = new GeneratedKeyHolder();
 
-        int rowsAffected = template.update(
+        template.update(
                 connection -> {
                     PreparedStatement ps = connection.prepareStatement(
                             "INSERT INTO Heroes (name, description, superpowerId) VALUES (?,?,?)",

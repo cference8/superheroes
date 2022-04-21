@@ -14,9 +14,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,6 +27,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+
 /**
  *
  * @author board
@@ -32,15 +35,24 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class SightingJDBC implements SightingDao {
 
+    DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+
     @Autowired
     JdbcTemplate template;
 
     @Override
     public Sighting addSighting(Sighting toAdd) {
 
+        format.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
+
+        try {
+            Date date = format.parse(toAdd.getDateSighted());
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+
         KeyHolder kh = new GeneratedKeyHolder();
 
-        int rowsAffected = template.update(
+        template.update(
                 connection -> {
                     PreparedStatement ps = connection.prepareStatement(
                             "INSERT INTO Sightings (heroId, locationId, date) VALUES (?,?,?)",
@@ -48,7 +60,7 @@ public class SightingJDBC implements SightingDao {
                     );
                     ps.setInt(1, toAdd.getHero().getHeroId());
                     ps.setInt(2, toAdd.getLocation().getId());
-                    ps.setString(3, toAdd.getDateSighted());
+                    ps.setDate(3, sqlDate);
 
                     return ps;
                 },
@@ -56,6 +68,10 @@ public class SightingJDBC implements SightingDao {
         int generatedId = kh.getKey().intValue();
 
         toAdd.setId(generatedId);
+
+        } catch (ParseException e) {
+
+        }
 
         return toAdd;
 
@@ -107,12 +123,17 @@ public class SightingJDBC implements SightingDao {
 
     @Override
     public List<Sighting> getAllSightingsToDisplay() {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         List<Sighting> toReturn = template.query("SELECT * FROM Sightings", new SightingMapper());
-
         for (Sighting sighting : toReturn) {
+            try {
+                Date date = formatter.parse(sighting.getDateSighted());
+                sighting.setDateSighted(format.format(date));
+            } catch (ParseException e) {
+
+            }
             sighting.setHero(getHeroForSightings(sighting.getId()));
             sighting.setLocation(getLocationForSightings(sighting.getId()));
-
         }
         return toReturn;
     }

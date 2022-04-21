@@ -14,14 +14,14 @@ import java.util.List;
  */
 public interface HeroDao {
     
-    public Hero addHero(Hero toAdd);
+   Hero addHero(Hero toAdd);
     
-    public void editHero(Hero toEdit);
+    void editHero(Hero toEdit);
     
-    public void deleteHeroById(int id);
+    void deleteHeroById(int id);
     
-    public Hero getHeroById(int id);
-    
-    public List<Hero> getAllHeroes();
-       
+    Hero getHeroById(int id);
+
+    List<Hero> getAllHeroes();
+
 }

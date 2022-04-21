@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
@@ -17,40 +17,40 @@
         <div id='stars3'></div>
 
         <div class="container">
-            <div class="row m-4">
-                <div class="col text-center border border-dark">
+            <div class="row">
+                <div class="col text-center m-4">
                     <h1>Superhero Sightings</h1>
                 </div>
             </div>
-            <div class="row m-4 border border-dark">
-                <div class="col text-center m-3">
+            <div class="row m-2">
+                <div class="col text-center m-2">
                     <a href="hero" class="btn btn-outline-primary btn-lg">Hero</a>
                 </div>
-                <div class="col text-center m-3">
+                <div class="col text-center m-2">
                     <a href="superpower" class="btn btn-outline-primary btn-lg">SuperPower</a>
                 </div>
-                <div class="col text-center m-3">
+                <div class="col text-center m-2">
                     <a href="location" class="btn btn-outline-primary btn-lg">Location</a>
                 </div>
-                <div class="col text-center m-3">
+                <div class="col text-center m-2">
                     <a href="sighting" class="btn btn-outline-primary btn-lg">Sighting</a>
                 </div>
-                <div class="col text-center m-3">
+                <div class="col text-center m-2">
                     <a href="organization" class="btn btn-outline-primary btn-lg">Organization</a>
                 </div>
             </div>
-            <div class="row m-4 border border-dark">
-                <div class="col-3 text-center m-3">
+            <div class="row">
+                <div class="col-4 text-center">
                     <span class="h3">Add Hero</span>
                 </div>
-                <div class="col-7 text-center m-3">
+                <div class="col-8 text-center">
                     <form action="addHero" method="POST">
                         <div class="form-group row">
                             <label for="name" class="col-3 col-form-label">
                                 Hero Name</label>
                             <div class="col-9">
                                 <input type="text" name="name" 
-                                       id="name" class="form-control"/>
+                                       id="name" class="form-control" required/>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -78,7 +78,7 @@
                     </form>
                 </div>
             </div>
-            <div class="row m-4 border border-dark">
+            <div class="row">
                 <div class="col text-center m-3">
                     <table class="table table-striped">
                         <thead>

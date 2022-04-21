@@ -33,13 +33,13 @@ public class LocationJDBC implements LocationDao {
 
         KeyHolder kh = new GeneratedKeyHolder();
 
-        int rowsAffected = template.update(
+        template.update(
                 connection -> {
                     PreparedStatement ps = connection.prepareStatement(
                             "INSERT INTO Locations (name, description, address, longitude, latitude) VALUES (?,?,?,?,?)",
                             Statement.RETURN_GENERATED_KEYS
                     );
-                    
+
                     ps.setString(1, toAdd.getName());
                     ps.setString(2, toAdd.getDescription());
                     ps.setString(3, toAdd.getAddress());

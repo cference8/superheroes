@@ -16,33 +16,33 @@
         <div id='stars3'></div>
 
         <div class="container">
-            <div class="row m-4">
-                <div class="col text-center border border-dark">
+            <div class="row">
+                <div class="col text-center m-4">
                     <h1>Superhero Sightings</h1>
                 </div>
             </div>
-            <div class="row m-4 border border-dark">
-                <div class="col text-center m-3">
+            <div class="row m-2">
+                <div class="col text-center m-2">
                     <a href="hero" class="btn btn-outline-primary btn-lg">Hero</a>
                 </div>
-                <div class="col text-center m-3">
+                <div class="col text-center m-2">
                     <a href="superpower" class="btn btn-outline-primary btn-lg">SuperPower</a>
                 </div>
-                <div class="col text-center m-3">
+                <div class="col text-center m-2">
                     <a href="location" class="btn btn-outline-primary btn-lg">Location</a>
                 </div>
-                <div class="col text-center m-3">
+                <div class="col text-center m-2">
                     <a href="sighting" class="btn btn-outline-primary btn-lg">Sighting</a>
                 </div>
-                <div class="col text-center m-3">
+                <div class="col text-center m-2">
                     <a href="organization" class="btn btn-outline-primary btn-lg">Organization</a>
                 </div>
             </div>
-            <div class="row m-4 border border-dark">
-                <div class="col-3 text-center m-3">
+            <div class="row">
+                <div class="col-4 text-center m-3">
                     <span class="h3">Edit Organization</span>
                 </div>
-                <div class="col-7 text-center m-3">
+                <div class="col-8 text-center m-3">
                     <form action="editOrganization" method="POST">
                         <div class="form-group row">
                             <label for="name" class="col-3 col-form-label">
@@ -85,7 +85,7 @@
                                 Heroes</label>
                             <div class="col-9">
                                 <select multiple id="heroes" name="heroId" 
-                                        class="form-control" >
+                                        class="form-control" required>
                                     <option th:each="hero : ${heroes}" 
                                             th:value="${hero.heroId}" 
                                             th:text="${hero.name}"
@@ -103,7 +103,7 @@
         <!-- End main body -->
 
         <!-- Optional JavaScript -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIoUt1VIPpXq7njD4WxY50CpxcZzOjTzI&libraries=places"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0rh7k_rSsOV3XcUmvYI2XPBC5lcS2umc&libraries=places"></script>
         <script type="text/javascript">
                     google.maps.event.addDomListener(window, 'load', intilize);
                     function intilize(){

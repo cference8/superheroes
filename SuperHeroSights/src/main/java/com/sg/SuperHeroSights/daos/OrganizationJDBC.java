@@ -38,7 +38,7 @@ public class OrganizationJDBC implements OranizationDao {
 
         KeyHolder kh = new GeneratedKeyHolder();
 
-        int rowsAffected = template.update(
+        template.update(
                 connection -> {
                     PreparedStatement ps = connection.prepareStatement(
                             "INSERT INTO Organizations (name, description, address, phone) VALUES (?,?,?,?)",
@@ -104,7 +104,7 @@ public class OrganizationJDBC implements OranizationDao {
 
     private List<Hero> getHeroByOrganizationId(int id) {
         List<Hero> toReturn = template.query("SELECT * FROM Heroes h JOIN SuperPowers sp ON sp.superpowerId = h.superpowerId \n" +
-"WHERE h.heroId IN (SELECT oh.heroId FROM Organization_Hero oh WHERE oh.organizationId = ?) ",
+        "WHERE h.heroId IN (SELECT oh.heroId FROM Organization_Hero oh WHERE oh.organizationId = ?) ",
                 new HeroMapper(), id);
 
         return toReturn;
