@@ -10,6 +10,8 @@ import com.sg.SuperHeroSights.models.Location;
 import com.sg.SuperHeroSights.models.Sighting;
 import com.sg.SuperHeroSights.service.ServiceLayer;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,12 @@ public class SightingController {
     
     @GetMapping("sighting")
     public String displaySightingPage(Model m){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
         List<Sighting> sightings = service.getAllSightingsToDisplay();
+        for(Sighting dateToFormat : sightings) {
+            LocalDate date = LocalDate.parse(dateToFormat.getDateSighted());
+            dateToFormat.setDateSighted(date.format(formatter));
+        }
         List<Hero> heroes = service.getAllHeroes();
         List<Location> locations = service.getAllLocations();
         

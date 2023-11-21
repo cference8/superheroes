@@ -14,14 +14,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -46,7 +42,6 @@ public class SightingJDBC implements SightingDao {
     public Sighting addSighting(Sighting toAdd) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        formatter = formatter.withZone(ZoneId.of("Etc/UTC"));  // Ensure this matches your desired time zone
 
         try {
             LocalDate localDate = LocalDate.parse(toAdd.getDateSighted(), formatter);
@@ -108,14 +103,10 @@ public class SightingJDBC implements SightingDao {
 
     @Override
     public List<Sighting> getAllSightings() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        formatter = formatter.withZone(ZoneId.of("Etc/UTC"));
         List<Sighting> toReturn = template.query("SELECT * FROM Sightings", new SightingMapper());
         for (Sighting sighting : toReturn) {
-            LocalDate localDate = LocalDate.parse(sighting.getDateSighted(), formatter);
             sighting.setHeroSighted(getHeroesForSighting(sighting.getId()));
             sighting.setLocationSighted(getLocationsForSighting(sighting.getId()));
-            sighting.setDateSighted(localDate.toString());
         }
         return toReturn;
     }
@@ -130,15 +121,10 @@ public class SightingJDBC implements SightingDao {
 
     @Override
     public List<Sighting> getAllSightingsToDisplay() {
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        formatter = formatter.withZone(ZoneId.of("Etc/UTC"));  // Ensure this matches your desired time zone
         List<Sighting> toReturn = template.query("SELECT * FROM Sightings", new SightingMapper());
         for (Sighting sighting : toReturn) {
-            LocalDate localDate = LocalDate.parse(sighting.getDateSighted(), formatter);
             sighting.setHero(getHeroForSightings(sighting.getId()));
             sighting.setLocation(getLocationForSightings(sighting.getId()));
-            sighting.setDateSighted(localDate.toString());
         }
         return toReturn;
     }
