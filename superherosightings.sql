@@ -13,7 +13,7 @@ CREATE TABLE Locations (
 	LocationId INT PRIMARY KEY auto_increment,
     `Name` varchar(50) NOT NULL,
     `Description` varchar(150) NOT NULL,
-    `Address` varchar(50) NOT NULL,
+    `Address` varchar(150) NOT NULL,
     `Longitude` decimal(9,6) NOT NULL,
     `Latitude` decimal(9,6) NOT NULL
 );
@@ -22,7 +22,7 @@ CREATE TABLE Organizations (
 	OrganizationId INT PRIMARY KEY auto_increment,
     `Name` varchar(50),
     `Description` varchar(50),
-    `Address` varchar(50),
+    `Address` varchar(150),
     `Phone` varchar(15)
 );
 
